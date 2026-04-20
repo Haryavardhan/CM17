@@ -1,0 +1,44 @@
+# Steps to Run the Smart Collaboration and Career Guidance System
+
+This document outlines the exact console commands required to run both the Backend (Python) and the Frontend (React/Vite) servers locally on your machine. You will need to open TWO separate terminal windows.
+
+---
+### 1. Start the Backend Server (Terminal 1)
+
+1. Open a new terminal or command prompt.
+2. Navigate into the backend directory:
+   cd backend
+
+3. Activate the virtual environment (Windows):
+   venv\Scripts\activate
+
+   *(Note: If you are on Mac/Linux, use: source venv/bin/activate)*
+
+4. (Optional) Install dependencies to ensure everything is up to date:
+   pip install -r requirements.txt
+
+5. Start the Python Flask application:
+   python app.py
+
+   *(The backend server should now be running, typically on http://127.0.0.1:5000. Keep this terminal open and running!)*
+
+---
+### 2. Start the Frontend Server (Terminal 2)
+
+1. Open a **second, separate terminal window**.
+2. Navigate into the frontend directory:
+   cd frontend
+
+3. Install the required Node.js packages (you only need to do this the first time):
+   npm install
+
+4. Start the Vite development server:
+   npm run dev
+
+5. The console will display a local URL (usually `http://localhost:5173`). 
+   Hover over the link and `Ctrl + Click` it to open your application in your web browser!
+
+---
+### Quick Summary:
+- **Terminal 1:** `cd backend` -> `venv\Scripts\activate` -> `python app.py`
+- **Terminal 2:** `cd frontend` -> `npm install` -> `npm run dev`

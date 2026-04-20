@@ -1,0 +1,62 @@
+@startuml
+skinparam componentStyle uml2
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam roundcorner 10
+
+title Fig 4.1: Architecture of CollabSphere
+
+package "Frontend Interface (Client)" {
+    [React Dashboard Interface] as Dashboard
+    [Auth & Profile Module] as AuthUI
+    [Collaborative Rooms & Chat] as RoomUI
+    [Kanban Task Tracker] as TaskUI
+    [AI Career Guidance UI] as AIUI
+    [Mentor Booking Interface] as BookingUI
+}
+
+package "Backend Server Layer (Flask REST API)" {
+    [Authentication & Role Manager] as AuthAPI
+    [Study Room & Chat Controller] as RoomAPI
+    [Task Management Engine] as TaskAPI
+    [Mentor Connection Manager] as MentorAPI
+    [Payment & Route Controller] as PaymentAPI
+    
+    component "Retrieval-Augmented Generation (RAG)" as RAG {
+        [TF-IDF Context Retriever] as Retriever
+    }
+}
+
+database "Data Storage" {
+    [PostgreSQL\n(Users, Rooms, Tasks, Payments)] as SQL_DB
+    file "career_docs.txt\n(Knowledge Base)" as Docs
+}
+
+cloud "External Services" {
+    [Groq API (Llama 3.1-8b)] as Groq
+    [Razorpay Gateway & Escrow] as Razorpay
+}
+
+' Client interactions
+AuthUI ~~> AuthAPI : HTTP POST (JWT)
+RoomUI ~~> RoomAPI : JSON requests
+TaskUI ~~> TaskAPI : State updates
+BookingUI ~~> MentorAPI : Connection Requests
+BookingUI ~~> PaymentAPI : Order Creation
+AIUI ~~> RAG : Career Queries
+
+' Internal Backend interactions
+AuthAPI --> SQL_DB : Read/Write User Data
+RoomAPI --> SQL_DB : Manage Memberships & Messages 
+TaskAPI --> SQL_DB : Update Kanban states
+MentorAPI --> SQL_DB : Update Status
+PaymentAPI --> SQL_DB : Log Transactions
+
+' RAG operations
+RAG --> Docs : Extract knowledge chunks
+RAG --> Groq : System Prompt + Context
+
+' External API calls
+PaymentAPI --> Razorpay : Tokenization / Webhooks
+
+@enduml
